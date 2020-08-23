@@ -26,7 +26,6 @@ if ( !empty($_POST)) {
     $item->unit_price = $vPrice;
     $item->external_reference = 'cristian@avradev.com';
 
-    
     // Creo al pagador
     $payer = new MercadoPago\Payer();
     $payer->name = "Lalo";
@@ -43,12 +42,14 @@ if ( !empty($_POST)) {
         "zip_code" => "1111"
     );
 
+
     //seteo las URL de respuesta
     $preference->back_urls = array(
         "success" => $actualDir . "exito.php",
         "failure" => $actualDir . "failure.php",
         "pending" => $actualDir . "pending.php"
     );
+
     
     $preference->payment_methods = array(
         "excluded_payment_methods" => array(
@@ -61,10 +62,14 @@ if ( !empty($_POST)) {
     );
 
     $preference->auto_return = "approved";
+    //$preference->auto_return = "all";
+    
     $preference->payer = $payer;
     $preference->items = array($item);
     $preference->notification_url = $actualDir . 'getwebhook.php';
     $preference->save();
+
+    var_dump($preference);
 }
 ?>
 <html class="supports-animation supports-columns svg no-touch no-ie no-oldie no-ios supports-backdrop-filter as-mouseuser" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
